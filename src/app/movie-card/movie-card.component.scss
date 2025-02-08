@@ -1,0 +1,10 @@
+.movie-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto; 
+    gap: 10px; 
+    }
+
+.movie-image {
+    width: 200px;
+}

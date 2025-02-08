@@ -63,3 +63,37 @@ export class UserLoginService {
       'Something bad happened; please try again later.');
   }
 }
+
+@Injectable({
+  providedIn: 'root',
+})
+export class GetAllMoviesService {
+  constructor(private http: HttpClient) { }
+
+  //Api call to get all movies
+  public getAllMovies(): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http
+      .get<any[]>(`${apiUrl}movies`, {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        }),
+      })
+      .pipe(map(this.extractResponseData), catchError(this.handleError));
+  }
+
+  private extractResponseData(res: any): any {
+    return res || {};
+  }
+
+  private handleError(error: HttpErrorResponse): any {
+    if (error.error instanceof ErrorEvent) {
+      console.error('Some error occurred:', error.error.message);
+    } else {
+      console.error(
+        `Error Status code ${error.status}, ` + `Error body is: ${error.error}`
+      );
+    }
+    return throwError('Something bad happened; please try again later.');
+  }
+}
